@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Paint</title>
+    </head>
+    <body style="text-align: center;background-image: url(bg1.jpg);
+    background-position: center;
+    background-size: cover;">
+    <canvas id="canvas" width="800" height="600" style="background-color: white;
+	border-style: ridge;
+	border-width: 10px;"></canvas>
+    <br>
+    <br>
+    <span>
+        <input type="text" id="raio" placeholder="raio">
+        <input type="text" id="cor" placeholder="cor">
+        <input type="text" id="largura" placeholder="largura da linha">
+    </span>
+    <br>
+    <br>
+    <button onclick="Clear()">Limpar</button>
+    <script>
+        var mouseEvent = "empty";
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        color = "black";
+        raio = 2;
+        larguraLinha = 2;
+        canvas.addEventListener("mousedown", myMouseDown);
+        function myMouseDown(e){
+            color = document.getElementById("cor").value;
+            raio = document.getElementById("raio").value;
+            larguraLinha = document.getElementById("largura").value;
+            mouseEvent = "mouseDown";
+        }
+        canvas.addEventListener("mouseup", myMouseUp);
+        function myMouseUp(e){
+            mouseEvent = "mouseUp";
+        }
+        canvas.addEventListener("mouseleave", myMouseLeave);
+        function myMouseLeave(e){
+            mouseEvent = "mouseLeave";
+        }
+        canvas.addEventListener("mousemove", myMouseMove);
+        function myMouseMove(e){
+            MouseX = e.clientX - canvas.offsetLeft;
+            MouseY = e.clientY - canvas.offsetTop;
+            console.log("draw")
+            if (mouseEvent == "mouseDown"){
+                console.log("mouse X =" + MouseX + "mouse Y =" + MouseY);
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = larguraLinha;
+                ctx.arc(MouseX,MouseY,raio,0,2*Math.PI);
+                ctx.stroke();
+            }
+        }
+        function Clear(){
+            ctx.clearRect(0,0,800,600);
+        }
+    </script>
+    </body>
+</html>
